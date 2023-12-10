@@ -10,7 +10,7 @@
     "test-negative": "newman run \"./postman/collections/Bookings API Negative.json\" -e \"./postman/environments/Local.postman_environment.json\"",
     "test": "npm run test-positive && npm run test-negative"
   },
-  "author": "",
+  "author": "Gizem Brasser",
   "license": "ISC",
   "dependencies": {
     "@sentry/node": "^7.64.0",
