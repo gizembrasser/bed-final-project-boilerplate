@@ -37,6 +37,41 @@ async function main() {
             create: user
         });
     }
+    for (const review of reviews) {
+        await prisma.review.upsert({
+            where: { id: review.id },
+            update: {},
+            create: review
+        });
+    }
+    for (const booking of bookings) {
+        await prisma.booking.upsert({
+            where: { id: booking.id },
+            update: {},
+            create: booking
+        });
+    }
+    for (const property of properties) {
+        await prisma.property.upsert({
+            where: { id: property.id },
+            update: {},
+            create: {
+                id: property.id,
+                title: property.title,
+                description: property.description,
+                location: property.location,
+                pricePerNight: property.pricePerNight,
+                bedroomCount: property.bedroomCount,
+                bathRoomCount: property.bathRoomCount,
+                maxGuestCount: property.maxGuestCount,
+                hostId: property.hostId,
+                rating: property.rating,
+                amenities: {
+                    connect: property.amenities.map((id) => ({ id }))
+                }
+            }
+        });
+    }
 };
 
 main()
