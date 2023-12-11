@@ -46,7 +46,7 @@ model Property {
 
   title         String
   description   String
-  Location      String
+  location      String
   pricePerNight Decimal @db.Decimal(10, 2)
   bedroomCount  Int
   bathRoomCount Int
