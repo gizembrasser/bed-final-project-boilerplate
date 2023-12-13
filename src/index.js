@@ -1,7 +1,9 @@
 import express from "express";
 import * as Sentry from "@sentry/node";
+import "dotenv/config";
 
 import amenitiesRouter from "./routes/amenities.js";
+import loginRouter from "./routes/login.js";
 import log from "./middleware/logMiddleware.js";
 import errorHandler from "./middleware/errorHandler.js";
 
@@ -32,6 +34,9 @@ app.use(log);
 
 // Resource routes
 app.use("/amenities", amenitiesRouter);
+
+// Login route
+app.use("/login", loginRouter);
 
 app.get("/", (req, res) => {
   res.send("Hello world!");
