@@ -9,6 +9,7 @@ import authMiddleware from "../middleware/auth.js";
 
 const router = express.Router();
 
+// GET route for fetching all bookings, and filtering by userId.
 router.get("/", async (req, res, next) => {
     try {
         const { userId } = req.query;
@@ -20,6 +21,7 @@ router.get("/", async (req, res, next) => {
     }
 });
 
+// POST route for creating a new booking.
 router.post("/", authMiddleware, async (req, res, next) => {
     try {
         const { userId, propertyId, checkinDate, checkoutDate, numberOfGuests, totalPrice, bookingStatus } = req.body;
@@ -31,6 +33,7 @@ router.post("/", authMiddleware, async (req, res, next) => {
     }
 });
 
+// GET route for fetching a single booking by ID.
 router.get("/:id", async (req, res, next) => {
     try {
         const { id } = req.params;
@@ -42,6 +45,7 @@ router.get("/:id", async (req, res, next) => {
     }
 }, notFoundErrorHandler);
 
+// PUT route for updating a booking by ID.
 router.put("/:id", authMiddleware, async (req, res, next) => {
     try {
         const { id } = req.params;
@@ -54,6 +58,7 @@ router.put("/:id", authMiddleware, async (req, res, next) => {
     }
 }, notFoundErrorHandler);
 
+// DELETE route for deleting a booking by ID.
 router.delete("/:id", authMiddleware, async (req, res, next) => {
     try {
         const { id } = req.params;

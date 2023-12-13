@@ -9,6 +9,7 @@ import authMiddleware from "../middleware/auth.js";
 
 const router = express.Router();
 
+// GET route for fetching all reviews.
 router.get("/", async (req, res, next) => {
     try {
         const reviews = await getReviews();
@@ -18,6 +19,7 @@ router.get("/", async (req, res, next) => {
     }
 });
 
+// POST route for creating a new review.
 router.post("/", authMiddleware, async (req, res, next) => {
     try {
         const { userId, propertyId, rating, comment } = req.body;
@@ -29,6 +31,7 @@ router.post("/", authMiddleware, async (req, res, next) => {
     }
 });
 
+// GET route for fetching a single review by ID.
 router.get("/:id", async (req, res, next) => {
     try {
         const { id } = req.params;
@@ -40,6 +43,7 @@ router.get("/:id", async (req, res, next) => {
     }
 }, notFoundErrorHandler);
 
+// PUT route for updating a review by ID.
 router.put("/:id", authMiddleware, async (req, res, next) => {
     try {
         const { id } = req.params;
@@ -52,6 +56,7 @@ router.put("/:id", authMiddleware, async (req, res, next) => {
     }
 }, notFoundErrorHandler);
 
+// DELETE route for deleting a review by ID.
 router.delete("/:id", authMiddleware, async (req, res, next) => {
     try {
         const { id } = req.params;

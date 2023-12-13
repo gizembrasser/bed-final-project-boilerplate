@@ -8,6 +8,7 @@ import userData from "../data/users.json" assert { type: "json" };
 
 const prisma = new PrismaClient({ log: ["query", "info", "warn", "error"] });
 
+// Main() function loads the data from the JSON files into the database.
 async function main() {
     const { amenities } = amenityData;
     const { bookings } = bookingData;
@@ -74,6 +75,7 @@ async function main() {
     }
 };
 
+// Function call disconnects the client when done, and logs out any errors.
 main()
     .then(async () => {
         await prisma.$disconnect();
