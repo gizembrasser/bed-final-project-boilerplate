@@ -1,24 +1,23 @@
 import express from "express";
 import * as Sentry from "@sentry/node";
 
+import amenitiesRouter from "./routes/amenities.js";
 import log from "./middleware/logMiddleware.js";
 import errorHandler from "./middleware/errorHandler.js";
 
 const app = express();
 
 Sentry.init({
-  dsn: 'https://b5733d0526d680a96880b0806c7dd41d@o4506263121821696.ingest.sentry.io/4506387601293312',
+  dsn: process.env.SENTRY_DSN,
   integrations: [
     // enable HTTP calls tracing
     new Sentry.Integrations.Http({ tracing: true }),
     // enable Express.js middleware tracing
     new Sentry.Integrations.Express({ app }),
-    new ProfilingIntegration(),
+    ...Sentry.autoDiscoverNodePerformanceMonitoringIntegrations(),
   ],
   // Performance Monitoring
   tracesSampleRate: 1.0,
-  // Set sampling rate for profiling - this is relative to tracesSampleRate
-  profilesSampleRate: 1.0,
 });
 
 // The request handler must be the first middleware on the app
@@ -30,6 +29,9 @@ app.use(Sentry.Handlers.tracingHandler());
 // Global middleware
 app.use(express.json());
 app.use(log);
+
+// Resource routes
+app.use("/amenities", amenitiesRouter);
 
 app.get("/", (req, res) => {
   res.send("Hello world!");
