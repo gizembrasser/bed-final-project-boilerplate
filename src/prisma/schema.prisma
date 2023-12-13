@@ -40,11 +40,7 @@ model Host {
 }
 
 model Property {
-  id String @id @default(uuid())
-
-  // Relations by id
-  hostId String
-
+  id            String  @id @default(uuid())
   title         String
   description   String
   location      String
@@ -53,6 +49,9 @@ model Property {
   bathRoomCount Int
   maxGuestCount Int
   rating        Int
+
+  // Relations by id
+  hostId String
 
   // Many-to-many relationship between Property and amenities
   amenities Amenity[]
