@@ -5,9 +5,11 @@ import createAmenity from "../services/amenities/createAmenity.js";
 import updateAmenityById from "../services/amenities/updateAmenityById.js";
 import deleteAmenity from "../services/amenities/deleteAmenity.js";
 import notFoundErrorHandler from "../middleware/notFoundErrorHandler.js";
+import authMiddleware from "../middleware/auth.js";
 
 const router = express.Router();
 
+// GET route for fetching all amenities.
 router.get("/", async (req, res, next) => {
     try {
         const amenities = await getAmenities();
@@ -17,7 +19,8 @@ router.get("/", async (req, res, next) => {
     }
 });
 
-router.post("/", async (req, res, next) => {
+// POST route for creating a new amenity.
+router.post("/", authMiddleware, async (req, res, next) => {
     try {
         const { name } = req.body;
         const newAmenity = await createAmenity(name);
@@ -28,6 +31,7 @@ router.post("/", async (req, res, next) => {
     }
 });
 
+// GET route for fetching a single amenity by ID.
 router.get("/:id", async (req, res, next) => {
     try {
         const { id } = req.params;
@@ -39,7 +43,8 @@ router.get("/:id", async (req, res, next) => {
     }
 }, notFoundErrorHandler);
 
-router.put("/:id", async (req, res, next) => {
+// PUT route for updating an amenity by ID.
+router.put("/:id", authMiddleware, async (req, res, next) => {
     try {
         const { id } = req.params;
         const { name } = req.body;
@@ -51,7 +56,8 @@ router.put("/:id", async (req, res, next) => {
     }
 }, notFoundErrorHandler);
 
-router.delete("/:id", async (req, res, next) => {
+// DELETE route for deleting an amenity by ID.
+router.delete("/:id", authMiddleware, async (req, res, next) => {
     try {
         const { id } = req.params;
         const deletedAmenityId = await deleteAmenity(id);
