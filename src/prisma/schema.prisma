@@ -21,6 +21,7 @@ model User {
   phoneNumber    String
   profilePicture String?
 
+  // 1-to-many relationships
   bookings Booking[]
   reviews  Review[]
 }
@@ -53,10 +54,13 @@ model Property {
   maxGuestCount Int
   rating        Int
 
+  // Many-to-many relationship between Property and amenities
   amenities Amenity[]
-  bookings  Booking[]
-  reviews   Review[]
 
+  bookings Booking[]
+  reviews  Review[]
+
+  // Reference to the related model
   host Host @relation(fields: [hostId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
   @@index([hostId])
