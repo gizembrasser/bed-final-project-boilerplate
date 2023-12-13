@@ -1,6 +1,9 @@
 import express from "express";
 import * as Sentry from "@sentry/node";
 
+import log from "./middleware/logMiddleware.js";
+import errorHandler from "./middleware/errorHandler.js";
+
 const app = express();
 
 Sentry.init({
@@ -24,12 +27,17 @@ app.use(Sentry.Handlers.requestHandler());
 // TracingHandler creates a trace for every incoming request
 app.use(Sentry.Handlers.tracingHandler());
 
+// Global middleware
+app.use(express.json());
+app.use(log);
+
 app.get("/", (req, res) => {
   res.send("Hello world!");
 });
 
 // Error handling
 app.use(Sentry.Handlers.errorHandler());
+app.use(errorHandler);
 
 app.listen(3000, () => {
   console.log("Server is listening on port 3000");
