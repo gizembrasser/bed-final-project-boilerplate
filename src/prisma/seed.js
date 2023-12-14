@@ -65,8 +65,10 @@ async function main() {
                 bedroomCount: property.bedroomCount,
                 bathRoomCount: property.bathRoomCount,
                 maxGuestCount: property.maxGuestCount,
-                hostId: property.hostId,
                 rating: property.rating,
+                host: {
+                    connect: { id: property.hostId }
+                },
                 amenities: {
                     connect: property.amenities.map((id) => ({ id }))
                 }
