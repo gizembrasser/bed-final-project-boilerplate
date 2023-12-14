@@ -3,7 +3,7 @@ import { PrismaClient } from "@prisma/client";
 
 // Takes a username and password as argument. 
 // Returns a JWT token if there's an existing user with those credentials.
-const login = async (username, password) => {
+const generateJwt = async (username, password) => {
     const secretKey = process.env.AUTH_SECRET_KEY || "my-secret-key";
     const prisma = new PrismaClient();
     const user = await prisma.user.findFirst({
@@ -19,4 +19,4 @@ const login = async (username, password) => {
     return token;
 };
 
-export default login;
+export default generateJwt;

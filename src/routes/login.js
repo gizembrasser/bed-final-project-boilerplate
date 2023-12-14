@@ -1,5 +1,5 @@
 import { Router } from "express";
-import login from "../services/auth/updatedLogin.js";
+import generateJwt from "../services/auth/generateJwt.js";
 
 const router = Router();
 
@@ -8,7 +8,7 @@ const router = Router();
 router.post("/", async (req, res, next) => {
     try {
         const { username, password } = req.body;
-        const token = await login(username, password);
+        const token = await generateJwt(username, password);
 
         if (!token) {
             res.status(401).json({ message: "Invalid credentials!" });
