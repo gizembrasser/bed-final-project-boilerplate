@@ -2,3 +2,5 @@ node_modules
 .vscode
 .env
 doc.md
+# Sentry Config File
+.sentryclirc
